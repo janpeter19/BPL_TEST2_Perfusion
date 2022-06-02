@@ -1,6 +1,7 @@
 # BPL_TEST2_Perfusion
 
 Basic example of perfusion cultivation using an FMU from Bioprocess Library *for* Modelica. 
+In this notebook you see several examples of how to interact with the FMU to provide process insight.
 Below script and diagram with a typical simulations of perfusion cultivation that you will get at the end of the notebook.
 
 ![](Fig2_BPL_TEST2_Perfusion_steps.png)
