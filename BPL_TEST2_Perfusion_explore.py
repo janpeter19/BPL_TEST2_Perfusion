@@ -77,11 +77,16 @@ if platform.system() == 'Linux': locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
 # Provde the right FMU and load for different platforms in user dialogue:
 global fmu_model, model, opts
 if platform.system() == 'Windows':
-    print('Windows - run FMU pre-compiled JModelica 2.14')
-    fmu_model ='BPL_TEST2_Perfusion_windows_jm_cs.fmu'        
-    model = load_fmu(fmu_model, log_level=0)
-    opts = model.simulate_options()
-    opts['silent_mode'] = True
+   print('Windows - run FMU pre-compiled JModelica 2.14')
+   fmu_model ='BPL_TEST2_Perfusion_windows_jm_cs.fmu'        
+   model = load_fmu(fmu_model, log_level=0)
+   opts = model.simulate_options()
+   opts['silent_mode'] = True
+   flag_vendor = 'JM'
+   flag_type = 'CS'
+   MSL_usage = model.get('MSL.usage')[0]
+   MSL_version = model.get('MSL.version')[0]
+   BPL_version = model.get('BPL.version')[0]
 elif platform.system() == 'Linux':
 #   flag_vendor = input('Linux - run FMU from JModelica (JM) or OpenModelica (OM)?')  
 #   flag_type = input('Linux - run FMU-CS (CS) or ME (ME)?')  
