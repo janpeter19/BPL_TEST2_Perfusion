@@ -1,3 +1,5 @@
 
 .DS_Store
 BPL_TEST2_Perfusion_windows_jm_cs.fmu
+*.txt
+*.mat
