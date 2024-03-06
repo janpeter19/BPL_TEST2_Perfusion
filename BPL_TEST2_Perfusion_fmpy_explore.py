@@ -16,6 +16,7 @@
 # 2023-04-21 - Compiled for Ubuntu 20.04 and changed BPL_version
 # 2023-05-31 - Adjusted to from importlib.meetadata import version
 # 2023-09-11 - Updated to FMU-explore 0.9.8 and introduced process diagram
+# 2024-03-06 - Update FMU-explore 0.9.9 - now with _0 replaced with _start everywhere
 #------------------------------------------------------------------------------------------------------------------
 
 # Setup framework
@@ -89,21 +90,21 @@ if flag_vendor in ['JM', 'jm']:
 elif flag_vendor in ['OM', 'om']:
    MSL_usage = '3.2.3 - used components: RealInput, RealOutput, CombiTimeTable, Types' 
    MSL_version = '3.2.3'
-   BPL_version = 'Bioprocess Library version 2.1.1' 
+   BPL_version = 'Bioprocess Library version 2.1.2 prel' 
 else:    
    print('There is no FMU for this platform')
     
 # Simulation time
 global simulationTime; simulationTime = 60.0
 
-# Provide process diagram on disk
-fmu_process_diagram ='BPL_TEST2_Perfusion_process_diagram_om.png'
-
 # Dictionary of time discrete states
 timeDiscreteStates = {} 
 
 # Define a minimal compoent list of the model as a starting point for describe('parts')
 component_list_minimum = ['bioreactor', 'bioreactor.culture']
+
+# Provide process diagram on disk
+fmu_process_diagram ='BPL_TEST2_Perfusion_process_diagram_om.png'
 
 #------------------------------------------------------------------------------------------------------------------
 #  Specific application constructs: stateDict, parDict, diagrams, newplot(), describe()
@@ -119,17 +120,17 @@ global stateDictInitial; stateDictInitial = {}
 for key in stateDict.keys():
     if not key[-1] == ']':
          if key[-3:] == 'I.y':
-            stateDictInitial[key] = key[:-10]+'I_0'
+            stateDictInitial[key] = key[:-10]+'I_start'
          elif key[-3:] == 'D.x':
-            stateDictInitial[key] = key[:-10]+'D_0'
+            stateDictInitial[key] = key[:-10]+'D_start'
          else:
-            stateDictInitial[key] = key+'_0'
+            stateDictInitial[key] = key+'_start'
     elif key[-3] == '[':
-        stateDictInitial[key] = key[:-3]+'_0'+key[-3:]
+        stateDictInitial[key] = key[:-3]+'_start'+key[-3:]
     elif key[-4] == '[':
-        stateDictInitial[key] = key[:-4]+'_0'+key[-4:]
+        stateDictInitial[key] = key[:-4]+'_start'+key[-4:]
     elif key[-5] == '[':
-        stateDictInitial[key] = key[:-5]+'_0'+key[-5:] 
+        stateDictInitial[key] = key[:-5]+'_start'+key[-5:] 
     else:
         print('The state vector has more than 1000 states')
         break
@@ -140,9 +141,9 @@ for value in stateDictInitial.values():
 
 # Create dictionaries parDict and parLocation
 global parDict; parDict = {}
-parDict['V_0'] = 1.0
-parDict['VX_0'] = 2.0
-parDict['VS_0'] = 100.0
+parDict['V_start'] = 1.0
+parDict['VX_start'] = 2.0
+parDict['VS_start'] = 100.0
 
 parDict['Y'] = 0.5
 parDict['qSmax'] = 1.0
@@ -154,12 +155,12 @@ parDict['filter_eps'] = eps             # Fraction filtrate flow
 parDict['filter_alpha_X'] = eps         # Fraction biomass in filtrate flow
 parDict['filter_alpha_S'] = eps         # Fraction substrate in filtrate flow
 
-parDict['V_0'] = 100.0
+parDict['V_start'] = 100.0
 parDict['S_in'] = 30.0
 
-parDict['harvesttank_V_0'] = 0.0
-parDict['harvesttank_X_0'] = 0.0
-parDict['harvesttank_S_0'] = 0.0
+parDict['harvesttank_V_start'] = 0.0
+parDict['harvesttank_X_start'] = 0.0
+parDict['harvesttank_S_start'] = 0.0
 
 parDict['pump1_t0'] = 0.0
 parDict['pump1_F0'] = 0.0
@@ -184,9 +185,9 @@ parDict['pump2_t4'] = 994.0
 parDict['pump2_F4'] = 0.2/eps
 
 global parLocation; parLocation = {}
-parLocation['V_0'] = 'bioreactor.V_0'
-parLocation['VX_0'] = 'bioreactor.m_0[1]' 
-parLocation['VS_0'] = 'bioreactor.m_0[2]' 
+parLocation['V_start'] = 'bioreactor.V_start'
+parLocation['VX_start'] = 'bioreactor.m_start[1]' 
+parLocation['VS_start'] = 'bioreactor.m_start[2]' 
 
 parLocation['Y'] = 'bioreactor.culture.Y'
 parLocation['qSmax'] = 'bioreactor.culture.qSmax'
@@ -196,12 +197,12 @@ parLocation['filter_eps'] = 'filter.eps'
 parLocation['filter_alpha_X'] = 'filter.alpha[1]'
 parLocation['filter_alpha_S'] = 'filter.alpha[2]'
 
-parLocation['V_0'] = 'feedtank.V_0'
+parLocation['V_start'] = 'feedtank.V_start'
 parLocation['S_in'] = 'feedtank.c_in[2]'
 
-parLocation['harvesttank_V_0'] = 'harvesttank.V_0'
-parLocation['harvesttank_X_0'] = 'harvesttank.m_0[1]'
-parLocation['harvesttank_S_0'] = 'harvesttank.m_0[2]'
+parLocation['harvesttank_V_start'] = 'harvesttank.V_start'
+parLocation['harvesttank_X_start'] = 'harvesttank.m_start[1]'
+parLocation['harvesttank_S_start'] = 'harvesttank.m_start[2]'
 
 parLocation['pump1_t0'] = 'schemePump1.table[1,1]'
 parLocation['pump1_F0'] = 'schemePump1.table[1,2]'
@@ -245,9 +246,9 @@ global parCheck; parCheck = []
 parCheck.append("parDict['Y'] > 0")
 parCheck.append("parDict['qSmax'] > 0")
 parCheck.append("parDict['Ks'] > 0")
-parCheck.append("parDict['V_0'] > 0")
-parCheck.append("parDict['VX_0'] >= 0")
-parCheck.append("parDict['VS_0'] >= 0")
+parCheck.append("parDict['V_start'] > 0")
+parCheck.append("parDict['VX_start'] >= 0")
+parCheck.append("parDict['VS_start'] >= 0")
 parCheck.append("parDict['pump1_t0'] < parDict['pump1_t1']")
 parCheck.append("parDict['pump1_t1'] < parDict['pump1_t2']")
 parCheck.append("parDict['pump1_t2'] < parDict['pump1_t3']")
@@ -403,13 +404,13 @@ def cstrProdMax():
     """Calculate from the model maximal chemostat productivity FX_max"""      
     X_max = model_get('bioreactor.culture.Y')*model_get('feedtank.c_in[2]')
     mu_max = model_get('bioreactor.culture.Y')*model_get('bioreactor.culture.qSmax')
-    V_nom = model_get('bioreactor.V_0')
+    V_nom = model_get('bioreactor.V_start')
     FX_max = mu_max*X_max*V_nom       
     return FX_max
 
 #------------------------------------------------------------------------------------------------------------------
 #  General code 
-FMU_explore = 'FMU-explore for FMPy version 0.9.8'
+FMU_explore = 'FMU-explore for FMPy version 0.9.9'
 #------------------------------------------------------------------------------------------------------------------
 
 # Define function par() for parameter update
@@ -431,12 +432,12 @@ def par(parDict=parDict, parCheck=parCheck, parLocation=parLocation, *x, **x_kwa
 
 # Define function init() for initial values update
 def init(parDict=parDict, *x, **x_kwarg):
-   """ Set initial values and the name should contain string '_0' to be accepted.
+   """ Set initial values and the name should contain string '_start' to be accepted.
        The function can handle general parameter string location names if entered as a dictionary. """
    x_kwarg.update(*x)
    x_init={}
    for key in x_kwarg.keys():
-      if '_0' in key: 
+      if '_start' in key: 
          x_init.update({key: x_kwarg[key]})
       else:
          print('Error:', key, '- seems not an initial value, use par() instead - check the spelling')
