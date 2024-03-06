@@ -127,21 +127,21 @@ if flag_vendor in ['JM', 'jm']:
 elif flag_vendor in ['OM', 'om']:
    MSL_usage = '3.2.3 - used components: RealInput, RealOutput, CombiTimeTable, Types' 
    MSL_version = '3.2.3'
-   BPL_version = 'Bioprocess Library version 2.1.1' 
+   BPL_version = 'Bioprocess Library version 2.1.2 prel' 
 else:    
    print('There is no FMU for this platform')
     
 # Simulation time
 global simulationTime; simulationTime = 60.0
 
-# Provide process diagram on disk
-fmu_process_diagram ='BPL_TEST2_Perfusion_process_diagram_om.png'
-
 # Dictionary of time discrete states
 timeDiscreteStates = {} 
 
 # Define a minimal compoent list of the model as a starting point for describe('parts')
 component_list_minimum = ['bioreactor', 'bioreactor.culture']
+
+# Provide process diagram on disk
+fmu_process_diagram ='BPL_TEST2_Perfusion_process_diagram_om.png'
 
 #------------------------------------------------------------------------------------------------------------------
 #  Specific application constructs: stateDict, parDict, diagrams, newplot(), describe()
