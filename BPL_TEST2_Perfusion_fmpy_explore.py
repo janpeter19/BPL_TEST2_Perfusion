@@ -19,6 +19,7 @@
 # 2024-03-06 - Update FMU-explore 0.9.9 - now with _0 replaced with _start everywhere
 # 2024-03-11 - Introduce FMU of ME type for Windows that likely works better with FMPy
 # 2024-05-14 - Polish the script
+# 2024-05-15 - The problem after 6.5 hours with JM-CS remains and after 0 hours with JM-ME.. ver 2.1.0 worked seems
 #------------------------------------------------------------------------------------------------------------------
 
 # Setup framework
@@ -48,14 +49,11 @@ if platform.system() == 'Linux': locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
 global fmu_model, model_description
 if platform.system() == 'Windows':
    print('Windows - run FMU pre-compiled JModelica 2.14')
-   fmu_model ='BPL_TEST2_Perfusion_windows_jm_me.fmu'        
+   fmu_model ='BPL_TEST2_Perfusion_windows_jm_cs.fmu'        
    model_description = read_model_description(fmu_model)  
    flag_vendor = 'JM'
-   flag_type = 'ME' 
-elif platform.system() == 'Linux':
-#   flag_vendor = input('Linux - run FMU from JModelica (JM) or OpenModelica (OM)?')  
-#   flag_type = input('Linux - run FMU-CS (CS) or ME (ME)?')  
-#   print()   
+   flag_type = 'CS' 
+elif platform.system() == 'Linux':  
    flag_vendor = 'OM'
    flag_type = 'ME'
    if flag_vendor in ['OM','om']:
