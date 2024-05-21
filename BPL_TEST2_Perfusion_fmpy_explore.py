@@ -20,6 +20,7 @@
 # 2024-03-11 - Introduce FMU of ME type for Windows that likely works better with FMPy
 # 2024-05-14 - Polish the script
 # 2024-05-15 - The problem after 6.5 hours with JM-CS remains and after 0 hours with JM-ME.. ver 2.1.0 worked seems
+# 2024-05-20 - Updated the OpenModelica version to 1.23.0-dev
 #------------------------------------------------------------------------------------------------------------------
 
 # Setup framework
@@ -57,7 +58,7 @@ elif platform.system() == 'Linux':
    flag_vendor = 'OM'
    flag_type = 'ME'
    if flag_vendor in ['OM','om']:
-      print('Linux - run FMU pre-comiled OpenModelica 1.21.0') 
+      print('Linux - run FMU pre-comiled OpenModelica 1.23.0-dev') 
       if flag_type in ['CS','cs']:         
          fmu_model ='BPL_TEST2_Perfusion_linux_om_cs.fmu'    
          model_description = read_model_description(fmu_model)  
