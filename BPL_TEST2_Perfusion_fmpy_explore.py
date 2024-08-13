@@ -468,7 +468,7 @@ def model_get(parLoc, model_description=model_description):
             else:
                value = None
          except NameError:
-            print('Error: Information available after first simution')
+            print('Error: Information available after first simulation')
             value = None          
    return value
 
