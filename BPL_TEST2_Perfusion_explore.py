@@ -57,6 +57,7 @@
 # 2024-03-04 - Update FMU-explore 0.9.9 - now with _0 replaced with _start everywhere
 # 2024-05-12 - Polish the scirpt
 # 2024-05-20 - Updated the OpenModelica version to 1.23.0-dev
+# 2024-08-31 - Adjusted the print text for Open Modelica 
 #------------------------------------------------------------------------------------------------------------------
 
 # Setup framework
@@ -93,7 +94,7 @@ elif platform.system() == 'Linux':
    flag_vendor = 'OM'
    flag_type = 'ME'
    if flag_vendor in ['OM','om']:
-      print('Linux - run FMU pre-comiled OpenModelica 1.23.0-dev') 
+      print('Linux - run FMU pre-comiled OpenModelica') 
       if flag_type in ['CS','cs']:         
          fmu_model ='BPL_TEST2_Perfusion_linux_om_cs.fmu'    
          model = load_fmu(fmu_model, log_level=0) 
@@ -128,7 +129,7 @@ if flag_vendor in ['JM', 'jm']:
 elif flag_vendor in ['OM', 'om']:
    MSL_usage = '3.2.3 - used components: RealInput, RealOutput, CombiTimeTable, Types' 
    MSL_version = '3.2.3'
-   BPL_version = 'Bioprocess Library version 2.2.0' 
+   BPL_version = 'Bioprocess Library version 2.2.1 - GUI' 
 else:    
    print('There is no FMU for this platform')
     
