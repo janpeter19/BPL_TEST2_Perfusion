@@ -61,6 +61,7 @@
 # 2024-10-24 - Update BPL 2.2.2 - GUI
 # 2024-11-07 - Update BPL 2.3.0
 # 2025-06-12 - Test MSL 4.1.0 with OpenModelica genreated FMU
+# 2025-07-28 - Update BPL 2.3.1
 #------------------------------------------------------------------------------------------------------------------
 
 # Setup framework
@@ -132,7 +133,7 @@ if flag_vendor in ['JM', 'jm']:
 elif flag_vendor in ['OM', 'om']:
    MSL_usage = '4.1.0 - used components: RealInput, RealOutput, CombiTimeTable, Types' 
    MSL_version = '4.1.0'
-   BPL_version = 'Bioprocess Library version 2.3.0' 
+   BPL_version = 'Bioprocess Library version 2.3.1' 
 else:    
    print('There is no FMU for this platform')
     
