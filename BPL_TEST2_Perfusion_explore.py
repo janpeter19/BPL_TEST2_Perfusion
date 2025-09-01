@@ -62,6 +62,7 @@
 # 2024-11-07 - Update BPL 2.3.0
 # 2025-06-12 - Test MSL 4.1.0 with OpenModelica genreated FMU
 # 2025-07-28 - Update BPL 2.3.1
+# 2025-09-01 - Test of FMU made in Ubuntu 24.04 and run in Ubuntu 22.04 in Colab and does NOT work 'GLIBC_2.38'
 #------------------------------------------------------------------------------------------------------------------
 
 # Setup framework
@@ -103,7 +104,8 @@ elif platform.system() == 'Linux':
          fmu_model ='BPL_TEST2_Perfusion_linux_om_cs.fmu'    
          model = load_fmu(fmu_model, log_level=0) 
       if flag_type in ['ME','me']:         
-         fmu_model ='BPL_TEST2_Perfusion_linux_om_me.fmu'    
+#        fmu_model ='BPL_TEST2_Perfusion_linux_om_me.fmu' 
+         fmu_model ='BPL_TEST2_Perfusion_linux_2404_om_me.fmu'       
          model = load_fmu(fmu_model, log_level=0)
    else:    
       print('There is no FMU for this platform')
