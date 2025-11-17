@@ -29,6 +29,7 @@
 # 2025-06-12 - Test MSL 4.1.0 with OpenModelica genreated FMU
 # 2025-07-28 - Update BPL 2.3.1
 # 2025-11-10 - Update FMU-explore 1.0.2
+# 2025-11-16 - FMU-explore 1.0.2 corrected
 #------------------------------------------------------------------------------------------------------------------
 
 # Setup framework
@@ -55,7 +56,6 @@ if platform.system() == 'Linux': locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
 #------------------------------------------------------------------------------------------------------------------
       
 # Provde the right FMU and load for different platforms in user dialogue:
-global model_description
 if platform.system() == 'Windows':
    print('Windows - run FMU pre-compiled JModelica 2.14')
    fmu_model ='BPL_TEST2_Perfusion_windows_jm_cs.fmu'        
@@ -78,9 +78,9 @@ elif platform.system() == 'Linux':
 
 # Provide various opts-profiles
 if flag_type in ['CS', 'cs']:
-   opts_std = {'ncp': 500}
+   opts_std = {'NCP': 500}
 elif flag_type in ['ME', 'me']:
-   opts_std = {'ncp': 500}
+   opts_std = {'NCP': 500}
 else:    
    print('There is no FMU for this platform')
   
@@ -101,7 +101,8 @@ else:
    print('There is no FMU for this platform')
     
 # Simulation time
-global simulationTime; simulationTime = 60.0
+simulationTime = 60.0
+prevFinalTime = 0
 
 # Dictionary of time discrete states
 timeDiscreteStates = {} 
@@ -122,7 +123,7 @@ stateValue = {variable.derivative.name:None for variable in model_description.mo
                                             if variable.derivative is not None}
 stateValue.update(timeDiscreteStates) 
 
-global stateValueInitial; stateValueInitial = {}
+stateValueInitial = {}
 for key in stateValue.keys():
     if not key[-1] == ']':
          if key[-3:] == 'I.y':
@@ -141,7 +142,7 @@ for key in stateValue.keys():
         print('The state vector has more than 1000 states')
         break
 
-global stateValueInitialLoc; stateValueInitialLoc = {}
+stateValueInitialLoc = {}
 for value in stateValueInitial.values():
     stateValueInitialLoc[value] = value
 
@@ -233,19 +234,19 @@ parLocation['pump2_t4'] = 'schemePump2.table[5,1]'
 parLocation['pump2_F4'] = 'schemePump2.table[5,2]'
 
 # Extended list of parameters and variables only for describe and not change
-global key_variables; key_variables = []
-parLocation['mu'] = 'bioreactor.culture.mu'; key_variables.append(parLocation['mu'])
+keyVariables = []
+parLocation['mu'] = 'bioreactor.culture.mu'; keyVariables.append(parLocation['mu'])
 
-key_variables.append('filter.inlet.c[1]')
-key_variables.append('filter.inlet.F')
-key_variables.append('filter.filtrate.F')
-key_variables.append('filter.retentate.c[1]')
-key_variables.append('filter.retentate.F')
-key_variables.append('harvesttank.inlet.c[1]')
-key_variables.append('harvesttank.inlet.F')
+keyVariables.append('filter.inlet.c[1]')
+keyVariables.append('filter.inlet.F')
+keyVariables.append('filter.filtrate.F')
+keyVariables.append('filter.retentate.c[1]')
+keyVariables.append('filter.retentate.F')
+keyVariables.append('harvesttank.inlet.c[1]')
+keyVariables.append('harvesttank.inlet.F')
 
-parLocation['feedtank.V'] = 'feedtank.V'; key_variables.append(parLocation['feedtank.V'])
-parLocation['feedtank.c_in[2]'] = 'feedtank.c_in[2]'; key_variables.append(parLocation['feedtank.c_in[2]'])
+parLocation['feedtank.V'] = 'feedtank.V'; keyVariables.append(parLocation['feedtank.V'])
+parLocation['feedtank.c_in[2]'] = 'feedtank.c_in[2]'; keyVariables.append(parLocation['feedtank.c_in[2]'])
 
 # Parameter value check 
 parCheck = []
@@ -265,7 +266,6 @@ parCheck.append("parValue['pump2_t2'] < parValue['pump2_t3']")
 parCheck.append("parValue['pump2_t3'] < parValue['pump2_t4']")
 
 # Create list of diagrams to be plotted by simu()
-global diagrams
 diagrams = []
 
 # Define standard plots
@@ -581,11 +581,11 @@ def simu(simulationTime=simulationTime, mode='Initial', options=opts_std, diagra
          validate = False,
          start_time = 0,
          stop_time = simulationTime,
-         output_interval = simulationTime/options['ncp'],
+         output_interval = simulationTime/options['NCP'],
          record_events = True,
          start_values = start_values,
          fmi_call_logger = None,
-         output = list(set(extract_variables(diagrams) + list(stateValue.keys()) + key_variables))
+         output = list(set(extract_variables(diagrams) + list(stateValue.keys()) + keyVariables))
       )
       
       simulationDone = True
@@ -617,11 +617,11 @@ def simu(simulationTime=simulationTime, mode='Initial', options=opts_std, diagra
             validate = False,
             start_time = prevFinalTime,
             stop_time = prevFinalTime + simulationTime,
-            output_interval = simulationTime/options['ncp'],
+            output_interval = simulationTime/options['NCP'],
             record_events = True,
             start_values = start_values,
             fmi_call_logger = None,
-            output = list(set(extract_variables(diagrams) + list(stateValue.keys()) + key_variables))
+            output = list(set(extract_variables(diagrams) + list(stateValue.keys()) + keyVariables))
          )
       
          simulationDone = True
