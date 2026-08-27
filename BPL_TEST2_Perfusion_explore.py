@@ -63,7 +63,6 @@ def newplot(title='Perfusion cultivation', plotType='TimeSeries'):
       diagrams.append("ax[4].plot(t,sim_res['filter.Fsp'],color='b',linestyle=linetype)")
       diagrams.append("ax[4].legend(['F1', 'F2'])")    
 
-
    # Plot diagram 
    elif plotType == 'TimeSeries2':
 
@@ -122,7 +121,6 @@ def newplot(title='Perfusion cultivation', plotType='TimeSeries'):
       diagrams.append("ax[5].plot(t,sim_res['filter.inlet.F'],color='b',linestyle=linetype)")
       diagrams.append("ax[6].plot(t,sim_res['bioreactor.V'],color='b',linestyle=linetype)")
       diagrams.append("ax[7].plot(t,sim_res['harvesttank.V'],color='b',linestyle=linetype)")
-
 
 # Define and extend describe for the current application
 def describe(name, decimals=3):
