@@ -12,6 +12,7 @@
 import sys
 import platform
 import locale
+import numpy as np
 import matplotlib.pyplot as plt 
 from pyfmi import load_fmu
 
