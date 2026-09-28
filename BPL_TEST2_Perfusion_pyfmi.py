@@ -5,6 +5,7 @@
 # 2026-09-14 - Move definition of stateValue to the fmu_explore_pyfmi module ver 1.2.0
 # 2026-09-18 - Decrease the framework to what is necessary and move matlotlib to the other setup-file
 # 2026-09-28 - Change indentaiton from 3 spaces to 4
+# 2026-09-28 - Brought numpy back since neede in the setup here
 #------------------------------------------------------------------------------------------------------------------
 
 #--------------------------------------------------------------------------------------------------
@@ -14,6 +15,7 @@
 # Setup framework
 import platform
 import locale
+import numpy as np
 from pyfmi import load_fmu
 
 # Set the environment - for Linux a JSON-file in the FMU is read
