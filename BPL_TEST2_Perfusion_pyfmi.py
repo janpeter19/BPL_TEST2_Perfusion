@@ -4,11 +4,12 @@
 # 2026-08-27 - Created
 # 2026-09-14 - Move definition of stateValue to the fmu_explore_pyfmi module ver 1.2.0
 # 2026-09-18 - Decrease the framework to what is necessary and move matlotlib to the other setup-file
+# 2026-09-28 - Change indentaiton from 3 spaces to 4
 #------------------------------------------------------------------------------------------------------------------
 
-#------------------------------------------------------------------------------------------------------------------
+#--------------------------------------------------------------------------------------------------
 #  Framework
-#------------------------------------------------------------------------------------------------------------------
+#--------------------------------------------------------------------------------------------------
 
 # Setup framework
 import platform
@@ -16,65 +17,66 @@ import locale
 from pyfmi import load_fmu
 
 # Set the environment - for Linux a JSON-file in the FMU is read
-if platform.system() == 'Linux': locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
+if platform.system() == 'Linux': 
+    locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
 
-#------------------------------------------------------------------------------------------------------------------
+#--------------------------------------------------------------------------------------------------
 #  Setup application FMU
-#------------------------------------------------------------------------------------------------------------------
+#--------------------------------------------------------------------------------------------------
       
 # Provde the right FMU and load for different platforms in user dialogue:
 if platform.system() == 'Windows':
-   print('Windows - run FMU pre-compiled JModelica 2.14')
-   flag_vendor = 'JM'
-   flag_type = 'CS'
-   fmu_model ='BPL_TEST2_Perfusion_windows_jm_cs.fmu'        
-   model = load_fmu(fmu_model, log_level=0)  
+    print('Windows - run FMU pre-compiled JModelica 2.14')
+    flag_vendor = 'JM'
+    flag_type = 'CS'
+    fmu_model ='BPL_TEST2_Perfusion_windows_jm_cs.fmu'        
+    model = load_fmu(fmu_model, log_level=0)  
 elif platform.system() == 'Linux':  
-   flag_vendor = 'OM'
-   flag_type = 'ME'
-   if flag_vendor in ['OM','om']:
-      print('Linux - run FMU pre-compiled OpenModelica') 
-      if flag_type in ['CS','cs']:         
-         fmu_model ='BPL_TEST2_Perfusion_linux_om_cs.fmu'    
-         model = load_fmu(fmu_model, log_level=0) 
-      if flag_type in ['ME','me']:         
-         fmu_model ='BPL_TEST2_Perfusion_linux_om_me.fmu' 
-#         fmu_model ='BPL_TEST2_Perfusion_linux_2404_om_me.fmu'       
-         model = load_fmu(fmu_model, log_level=0)
-   else:    
-      print('There is no FMU for this platform')
+    flag_vendor = 'OM'
+    flag_type = 'ME'
+    if flag_vendor in ['OM','om']:
+        print('Linux - run FMU pre-compiled OpenModelica') 
+        if flag_type in ['CS','cs']:         
+            fmu_model ='BPL_TEST2_Perfusion_linux_om_cs.fmu'    
+            model = load_fmu(fmu_model, log_level=0) 
+        if flag_type in ['ME','me']:         
+            fmu_model ='BPL_TEST2_Perfusion_linux_om_me.fmu' 
+#            fmu_model ='BPL_TEST2_Perfusion_linux_2404_om_me.fmu'       
+            model = load_fmu(fmu_model, log_level=0)
+    else:
+        print('There is no FMU for this platform')
 
 # Provide various opts-profiles
 if flag_type in ['CS', 'cs']:
-   opts_std = model.simulate_options()
-   opts_std['silent_mode'] = True
-   opts_std['ncp'] = 500 
-   opts_std['result_handling'] = 'binary'     
+    opts_std = model.simulate_options()
+    opts_std['silent_mode'] = True
+    opts_std['ncp'] = 500 
+    opts_std['result_handling'] = 'binary'     
 elif flag_type in ['ME', 'me']:
-   opts_std = model.simulate_options()
-   opts_std["CVode_options"]["verbosity"] = 50 
-   opts_std['ncp'] = 500 
-   opts_std['result_handling'] = 'binary'
-   opts_std['result_handling'] = 'binary' 
-   opts_std['CVode_options']['atol'] = np.array([1.e-06, 1.e-06, 1.e-06, 1.e-06, 1.e-06, 1.e-06, 1.e-06])  
-   opts_std['CVode_options']['rtol'] = 0.0001   
-else:    
-   print('There is no FMU for this platform')
-  
+    opts_std = model.simulate_options()
+    opts_std["CVode_options"]["verbosity"] = 50 
+    opts_std['ncp'] = 500 
+    opts_std['result_handling'] = 'binary'
+    opts_std['result_handling'] = 'binary' 
+    opts_std['CVode_options']['atol'] = np.array([1.e-06, 1.e-06, 1.e-06, 1.e-06, 1.e-06, 1.e-06, 1.e-06])
+    opts_std['CVode_options']['rtol'] = 0.0001   
+else:
+    print('There is no FMU for this platform')
+
 # Provide various MSL and BPL versions
 if flag_vendor in ['JM', 'jm']:
-   MSL_usage = model.get('MSL.usage')[0]
-   MSL_version = model.get('MSL.version')[0]
-   BPL_version = model.get('BPL.version')[0]
+    MSL_usage = model.get('MSL.usage')[0]
+    MSL_version = model.get('MSL.version')[0]
+    BPL_version = model.get('BPL.version')[0]
 elif flag_vendor in ['OM', 'om']:
-   MSL_usage = '4.1.0 - used components: RealInput, RealOutput, CombiTimeTable, Types' 
-   MSL_version = '4.1.0'
-   BPL_version = 'Bioprocess Library version 2.3.2' 
+    MSL_usage = '4.1.0 - used components: RealInput, RealOutput, CombiTimeTable, Types'
+    MSL_version = '4.1.0'
+    BPL_version = 'Bioprocess Library version 2.3.2'
 else:    
-   print('There is no FMU for this platform')
-   
+    print('There is no FMU for this platform')
+
 #------------------------------------------------------------------------------------------------------------------
-#  Specific application constructs: stateValue, parValue, parLocation, parCheck, diagrams, ax, lines
+#  Specific application constructs: parValue, parLocation, parCheck, diagrams, ax, lines
 #------------------------------------------------------------------------------------------------------------------   
     
 # Simulation time
@@ -205,9 +207,9 @@ ax = []
 # Create list of pens for the diagrams
 lines = ['-','--',':','-.']
 
-#------------------------------------------------------------------------------------------------------------------
+#--------------------------------------------------------------------------------------------------
 #  Specific application constructs: external function
-#------------------------------------------------------------------------------------------------------------------
+#--------------------------------------------------------------------------------------------------
 
 def cstrProdMax(model):
     """Calculate from the model maximal chemostat productivity FX_max"""      
