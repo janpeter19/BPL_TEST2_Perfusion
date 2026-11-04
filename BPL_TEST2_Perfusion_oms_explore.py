@@ -70,7 +70,7 @@ def newplot(title="Perfusion cultivation", plotType="TimeSeries"):
             "ax[1].plot(t,sim_res['Perfusion.bioreactor.c[1]'],color='b',linestyle=linetype)"
         )
         diagrams.append(
-            "ax[2].plot(t,sim_res['harvesttank.inlet.F']*sim_res['harvesttank.inlet.c[1]'],color='b',linestyle=linetype)"
+            "ax[2].plot(t,sim_res['Perfusion.harvesttank.inlet.F']*sim_res['Perfusion.harvesttank.inlet.c[1]'],color='b',linestyle=linetype)"
         )
         #      diagrams.append("ax[2].plot([0, simulationTime], [cstrProdMax(model), cstrProdMax(model)], color='r',linestyle=linetype)")
         diagrams.append("ax[2].legend(['FX', 'cstr FX_max'])")
