@@ -38,8 +38,8 @@ elif platform.system() == 'Linux':
         if flag_type in ['CS','cs']:         
             fmu_model ='BPL_TEST2_Perfusion_linux_om_cs.fmu'    
 #            model_description = read_model_description(fmu_model)  
-        if flag_type in ['ME','me']:         
-#            fmu_model ='BPL_TEST2_Perfusion_linux_om_me.fmu'    
+        if flag_type in ['ME','me']:
+            fmu_model ='BPL_TEST2_Perfusion_linux_om_me.fmu'    
 #            model_description = read_model_description(fmu_model)  
     else:
         print('There is no FMU for this platform')
