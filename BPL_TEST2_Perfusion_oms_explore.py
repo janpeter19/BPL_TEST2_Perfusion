@@ -80,10 +80,10 @@ def newplot(title="Perfusion cultivation", plotType="TimeSeries"):
         diagrams.append("ax[3].plot(t,sim_res['Perfusion.D'],color='b',linestyle=linetype)")
         diagrams.append("ax[3].legend(['mu', 'D'])")
         diagrams.append(
-            "ax[4].plot(t,sim_res['feedtank.Fsp'],color='r',linestyle=linetype)"
+            "ax[4].plot(t,sim_res['Perfusion.feedtank.Fsp'],color='r',linestyle=linetype)"
         )
         diagrams.append(
-            "ax[4].plot(t,sim_res['filter.Fsp'],color='b',linestyle=linetype)"
+            "ax[4].plot(t,sim_res['Perfusion.filter.Fsp'],color='b',linestyle=linetype)"
         )
         diagrams.append("ax[4].legend(['F1', 'F2'])")
 
