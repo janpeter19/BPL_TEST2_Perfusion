@@ -5,6 +5,7 @@
 # 2026-09-18 - Brought in matplotlib.pylot since used here
 # 2026-09-18 - Brought numpy back here since used in several notebooks
 # 2026-10-24 - Added clean-up section at the end
+# 2026-11-07 - Corrected to self.model in cstrProdMax
 # ------------------------------------------------------------------------------------------------------------------
 
 # ------------------------------------------------------------------------------------------------------------------
@@ -194,7 +195,7 @@ def describe(name, decimals=3):
         describe_MSL()
 
     elif name in ["cstrProdMax"]:
-        print(cstrProdMax.__doc__, ":", cstrProdMax(model), "[ g/h ]")
+        print(cstrProdMax.__doc__, ":", cstrProdMax(self.model), "[ g/h ]")
 
     else:
         describe_general(name, decimals)
