@@ -195,7 +195,7 @@ def describe(name, decimals=3):
         describe_MSL()
 
     elif name in ["cstrProdMax"]:
-        print(cstrProdMax.__doc__, ":", cstrProdMax(self.model), "[ g/h ]")
+        print(cstrProdMax.__doc__, ":", cstrProdMax(Application.model), "[ g/h ]")
 
     else:
         describe_general(name, decimals)
